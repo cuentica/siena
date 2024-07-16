@@ -26,9 +26,9 @@ public class JdbcModelTest extends BaseModelTest {
 		if(pm == null){
 			Properties p = new Properties();
 			
-			String driver   = "com.mysql.jdbc.Driver";
-			String username = "siena";
-			String password = "siena";
+			String driver   = "com.mysql.cj.jdbc.Driver";
+			String username = "root";
+			String password = "";
 			String url      = "jdbc:mysql://localhost/siena";
 			
 			p.setProperty("driver",   driver);
@@ -53,7 +53,7 @@ public class JdbcModelTest extends BaseModelTest {
 			Database database = generator.getDatabase();
 	
 			Platform platform = PlatformFactory.createNewPlatformInstance("mysql");
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection connection = DriverManager.getConnection(url, username, password);
 			
 			System.out.println(platform.getAlterTablesSql(connection, database));

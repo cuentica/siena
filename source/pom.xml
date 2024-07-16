@@ -1,19 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>siena</groupId>
 	<artifactId>siena</artifactId>
 	<name>siena</name>
-	<version>1.0.0-b6</version>
-	<url>http://www.sienaproject.com</url>
+	<version>1.0.0-cuentica</version>
+	<url>https://www.sienaproject.com</url>
 	<description>
 		Siena is a persistence abstraction layer made in Java with various implementations:
 		* siena-jdbc: persists objects into a relational database using JDBC (status: deeply tested)
 		* siena-gae: persists objects into the Google App Engine's datastore using its low-level API (status: beta)
 		* siena-sdb: persists objects using Amazon's SimpleDB (very experimental)
 		* siena-remote: persists objects remotely using a remote web application that uses siena. (planning)
-		
+
 		Siena is also:
 		* Intrusive. You make a class persistent by
 		extending a certain class. Relationships are defined also in an
@@ -31,7 +31,7 @@
 	<licenses>
 		<license>
 			<name>Apache 2</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
 			<comments>Apache License 2.0</comments>
 		</license>
@@ -39,7 +39,7 @@
 
 	<organization>
 		<name>Google Code</name>
-		<url>http://code.google.com/</url>
+		<url>https://code.google.com/</url>
 	</organization>
 
 	<developers>
@@ -48,7 +48,7 @@
 			<name>Pascal Voitot</name>
 			<email>pascal.voitot.dev@gmail.com</email>
 			<organization>Mandubian</organization>
-			<organizationUrl>http://www.mandubian.org/</organizationUrl>
+			<organizationUrl>https://www.mandubian.org/</organizationUrl>
 			<roles>
 				<role>Developer</role>
 			</roles>
@@ -58,7 +58,7 @@
 			<name>Alberto Gimeno</name>
 			<email>gimenete at gmail.com</email>
 			<organization>Google Code</organization>
-			<organizationUrl>http://code.google.com/</organizationUrl>
+			<organizationUrl>https://code.google.com/</organizationUrl>
 			<roles>
 				<role>Architect</role>
 				<role>Manager</role>
@@ -70,7 +70,7 @@
 			<name>Jonathan Sánchez</name>
 			<email>jsanca at gmail.com</email>
 			<organization>Google Code</organization>
-			<organizationUrl>http://code.google.com/</organizationUrl>
+			<organizationUrl>https://code.google.com/</organizationUrl>
 			<roles>
 				<role>Developer</role>
 			</roles>
@@ -80,7 +80,7 @@
 			<name>Emanuele Ziglioli</name>
 			<email>zigliolie at sirtrack dot com</email>
 			<organization>Sirtrack</organization>
-			<organizationUrl>http://www.sirtrack.com/</organizationUrl>
+			<organizationUrl>https://www.sirtrack.com/</organizationUrl>
 			<roles>
 				<role>Developer</role>
 			</roles>
@@ -89,7 +89,7 @@
 
 	<issueManagement>
 		<system>Gooble issues tracker</system>
-		<url>http://code.google.com/p/siena/issues</url>
+		<url>https://code.google.com/p/siena/issues</url>
 	</issueManagement>
 
 
@@ -134,30 +134,30 @@
 					<!-- >doclet>
 						gr.spinellis.umlgraph.doclet.UmlGraphDoc
 						</doclet>
-						
+
 						<docletArtifact>
 						<groupId>gr.spinellis</groupId>
 						<artifactId>UmlGraph</artifactId>
 						<version>4.6</version>
 						</docletArtifact>
-						
+
 						<additionalparam>
 						-inferrel -inferdep -quiet -hide java.*
 						-collpackages java.util.* -qualify
 						-postfixpackage -nodefontsize 9
 						-nodefontpackagesize 7
-						
+
 						</additionalparam -->
 
 					<links>
 						<link>
-							http://java.sun.com/j2se/1.5.0/docs/api
+							https://java.sun.com/j2se/1.5.0/docs/api
 						</link>
-						<link>http://www.junit.org/junit/javadoc/</link>
-						<link>http://www.dbunit.org/apidocs/</link>
-						<link>http://db.apache.org/ddlutils/api/</link>
+						<link>https://www.junit.org/junit/javadoc/</link>
+						<link>https://www.dbunit.org/apidocs/</link>
+						<link>https://db.apache.org/ddlutils/api/</link>
 						<link>
-							http://commons.apache.org/dbcp/apidocs/
+							https://commons.apache.org/dbcp/apidocs/
 						</link>
 
 					</links>
@@ -168,13 +168,12 @@
 	</reporting>
 
 	<properties>
-		<mysql.version>5.1.6</mysql.version>
+		<mysql.version>8.0.29</mysql.version>
 		<gae.version>1.7.1</gae.version>
-		<hbase.version>0.21.0-SNAPSHOT</hbase.version>
 		<postgres.version>8.4-702.jdbc4</postgres.version>
 		<drizzle.version>1.0</drizzle.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
 	<build>
@@ -185,8 +184,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>8</source>
+					<target>8</target>
 				</configuration>
 			</plugin>
 			<!-- Check code style -->
@@ -203,15 +202,17 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.6</version>
 				<configuration>
 					<format>txt</format>
 				</configuration>
-				<version>2.3</version>
 			</plugin>
 
 			<!-- Test cases -->
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.2</version>
 				<configuration>
 					<excludes>
 						<exclude>**/BaseTest.java</exclude>
@@ -233,13 +234,7 @@
 			<url>https://repository.apache.org/content/repositories/snapshots</url>
 			<snapshots><enabled>true</enabled></snapshots>
 		</repository>
-		<repository>
-            <id>objectify-appengine</id>
-            <url>http://objectify-appengine.googlecode.com/svn/maven</url>
-        </repository>
 	</repositories>
-
-
 
 	<dependencies>
 		<dependency>
@@ -249,6 +244,38 @@
 			<scope>compile</scope>
 		</dependency>
 
+
+		<!-- Google App Engine Dependencies -->
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-tools-sdk</artifactId>
+			<version>${gae.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-1.0-sdk</artifactId>
+			<version>${gae.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-testing</artifactId>
+			<version>${gae.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-labs</artifactId>
+			<version>${gae.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-stubs</artifactId>
+			<version>${gae.version}</version>
+			<scope>test</scope>
+		</dependency>
 
 		<!-- Test -->
 		<dependency>
@@ -287,95 +314,49 @@
 			<version>${mysql.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>postgresql</groupId>
-		    <artifactId>postgresql</artifactId>
-		    <version>${postgres.version}</version>
-		    <scope>test</scope>
-		</dependency>
-		
-		<dependency>                                                                        
-			<groupId>org.drizzle.jdbc</groupId>                                          
-			<artifactId>drizzle-jdbc</artifactId>                                        
-			<version>${drizzle.version}</version>                                                       
-		    <scope>test</scope>
-		</dependency>
-		
-        <!-- Google App Engine Dependencies -->
-		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-tools-sdk</artifactId>
-			<version>${gae.version}</version>
-			<scope>provided</scope>
-		</dependency>		
-		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-api-1.0-sdk</artifactId>
-			<version>${gae.version}</version>
-			<scope>compile</scope>
-		</dependency>		
-		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-testing</artifactId>
-			<version>${gae.version}</version>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgres.version}</version>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-api-labs</artifactId>
-			<version>${gae.version}</version>
+			<groupId>org.drizzle.jdbc</groupId>
+			<artifactId>drizzle-jdbc</artifactId>
+			<version>${drizzle.version}</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-api-stubs</artifactId>
-			<version>${gae.version}</version>
-			<scope>test</scope>
-		</dependency>
-		
-		<!-- Hbase dependencies -->
-		<dependency>
-			<groupId>org.apache.hbase</groupId>
-			<artifactId>hbase</artifactId>
-			<version>${hbase.version}</version>
-			<scope>compile</scope>
 		</dependency>
 
 		<!-- H2 dependencies -->
 		<dependency>
-		    <groupId>com.h2database</groupId>
-		    <artifactId>h2</artifactId>
-		    <version>1.3.154</version>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.3.154</version>
 			<scope>compile</scope>
 		</dependency>
 
 
 		<!-- Fusion dependencies -->
 		<dependency>
-		    <groupId>com.google.api.client</groupId>
-		    <artifactId>google-api-client</artifactId>
-		    <version>1.4.1-beta</version>
+			<groupId>com.google.api.client</groupId>
+			<artifactId>google-api-client</artifactId>
+			<version>1.4.1-beta</version>
 		</dependency>
 
 		<!-- SDB dependencies -->
 		<dependency>
-    		<groupId>com.amazonaws</groupId>
-    		<artifactId>aws-java-sdk</artifactId>
-    		<version>1.2.4</version>
-		</dependency>		
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.2.4</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
 			<version>4.2.1</version>
 		</dependency>
-		
-		<!-- Objectify dependencies -->
-        <dependency>
-            <groupId>com.googlecode.objectify</groupId>
-            <artifactId>objectify</artifactId>
-            <version>3.1</version>
-        </dependency>
+
 	</dependencies>
 
 	<profiles>

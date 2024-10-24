@@ -30,6 +30,8 @@ import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.*;
 
 /**
@@ -130,22 +132,6 @@ public class Util {
 		return value;
 	}
 
-	private static final SimpleDateFormat LOCALDATETIMESTAMP_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss") {
-		private static final long serialVersionUID = 1L;
-
-		{
-			setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
-		}
-	};
-
-	private static final SimpleDateFormat LOCALDATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm") {
-		private static final long serialVersionUID = 1L;
-
-		{
-			setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
-		}
-	};
-
 	private static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS") {
 		private static final long serialVersionUID = 1L;
 
@@ -175,18 +161,6 @@ public class Util {
 			return TIMESTAMP_FORMAT.parse(s);
 		} catch (ParseException e) {
 			throw new SienaException(e);
-		}
-	}
-
-	public static Date localdatetime(String s) {
-		try {
-			return LOCALDATETIMESTAMP_FORMAT.parse(s);
-		} catch (ParseException e) {
-			try {
-				return LOCALDATETIME_FORMAT.parse(s);
-			} catch (ParseException exc) {
-				throw new SienaException(e);
-			}
 		}
 	}
 
@@ -297,14 +271,9 @@ public class Util {
 		}
 
 		if (Date.class == type && value instanceof LocalDateTime) {
-//            System.out.println("----------------------");
-//            System.out.println("fromObject >> Date.class >> " + value.getClass().getName() + " >> " + value.toString());
-			Date date = localdatetime(value.toString());
-			Object object = translateDate(field, date);
-//            System.out.println("fromObject >> Date: >> " + date.toString());
-//            System.out.println("fromObject >> object: >> " + object.toString());
-//            System.out.println("----------------------");
-			return object;
+			LocalDateTime datetime = (LocalDateTime) value;
+			ZonedDateTime zonedDateTime = datetime.atZone(ZoneId.systemDefault());
+			return Date.from(zonedDateTime.toInstant());
 		}
 
 		if (String.class.isAssignableFrom(value.getClass()) && type != String.class) {

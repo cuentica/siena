@@ -269,10 +269,8 @@ public class BaseQuery<T> extends BaseQueryData<T> implements Query<T> {
 		return JsonSerializer.serialize(this).toString();
 	}
 
-	public void dump(OutputStream os, QueryOption... options) {		
-		// TODO manage Java object serialization
-		OutputStreamWriter st = new OutputStreamWriter(os);
-		try {
+	public void dump(OutputStream os, QueryOption... options) {
+		try (OutputStreamWriter st = new OutputStreamWriter(os)) {
 			st.write(JsonSerializer.serialize(this).toString());
 		} catch (IOException e) {
 			throw new SienaException(e);
@@ -281,25 +279,22 @@ public class BaseQuery<T> extends BaseQueryData<T> implements Query<T> {
 
 	@SuppressWarnings("unchecked")
 	public Query<T> restore(String dump, QueryOption... options) {
-		// TODO manage Java object serialization
 		return (Query<T>)JsonSerializer.deserialize(BaseQuery.class, Json.loads(dump));
 	}
 
 	@SuppressWarnings("unchecked")
 	public Query<T> restore(InputStream is, QueryOption... options) {
-		// TODO manage Java object serialization
-		InputStreamReader st = new InputStreamReader(is);
-		StringBuilder sb = new StringBuilder();
-		char[] buffer = new char[1024];
-		try {
-			while( st.read(buffer) != -1){
-				sb.append(buffer);
+		try (InputStreamReader st = new InputStreamReader(is)) {
+			StringBuilder sb = new StringBuilder();
+			char[] buffer = new char[1024];
+			int bytesRead;
+			while ((bytesRead = st.read(buffer)) != -1) {
+				sb.append(buffer, 0, bytesRead);
 			}
+			return (Query<T>)JsonSerializer.deserialize(BaseQuery.class, Json.loads(sb.toString()));
 		} catch (IOException e) {
 			throw new SienaException(e);
 		}
-		
-		return (Query<T>)JsonSerializer.deserialize(BaseQuery.class, Json.loads(sb.toString()));
 	}
 		
 }

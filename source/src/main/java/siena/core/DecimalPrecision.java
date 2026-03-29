@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface DecimalPrecision {
 	public enum StorageType {
-		NATIVE,	// NATIVE means it uses native DB storage for bigdecimal: for SQL: SQL type DECIMAL - for GAE:String 
+		NATIVE,	// Uses native DB storage for BigDecimal (SQL type DECIMAL)
 		DOUBLE, // stored as a double
 		STRING	// stored as a string (not padded with 0 yet)
 	}

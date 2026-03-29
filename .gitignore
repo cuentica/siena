@@ -1,13 +1,8 @@
 source/target
-source/WEB-INF
 source/.classpath
 source/.settings
 source/.project
 source/bin
 source/.target
 source/tmp
-.svn
 .idea
-web/.project
-web/.classpath
-web/.settings

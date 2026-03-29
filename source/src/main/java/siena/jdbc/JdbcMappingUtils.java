@@ -241,20 +241,17 @@ public class JdbcMappingUtils {
 		
 		if(field.isAnnotationPresent(Polymorphic.class)){
 			try {
+				byte[] bytes;
 				if(java.sql.Blob.class.isAssignableFrom(value.getClass())){
 					java.sql.Blob blob = (java.sql.Blob)value;
-					ObjectInputStream in = 
-						new ObjectInputStream(new ByteArrayInputStream(blob.getBytes(0, (int)blob.length())));
-					return in.readObject();
-				}else {
-					ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream((byte[])value));
+					bytes = blob.getBytes(1, (int)blob.length());
+				} else {
+					bytes = (byte[])value;
+				}
+				try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
 					return in.readObject();
 				}
-			} catch (IOException e) {
-				throw new SienaException(e);
-			} catch (ClassNotFoundException e) {
-				throw new SienaException(e);
-			} catch(SQLException e){
+			} catch (IOException | ClassNotFoundException | SQLException e) {
 				throw new SienaException(e);
 			}
 		}
@@ -264,7 +261,7 @@ public class JdbcMappingUtils {
 			try {
 				// converts the blob into a byte[]...
 				// TODO what to do with a very long blob????
-				return blob.getBytes(0, (int)blob.length());
+				return blob.getBytes(1, (int)blob.length());
 			} catch (SQLException e) {
 				throw new SienaException(e);
 			}

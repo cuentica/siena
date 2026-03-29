@@ -781,6 +781,38 @@ siena/source/src/main/java/siena/
 └── logging/                              -- Logging interno
 ```
 
+## Seguridad
+
+### SQL Injection
+
+No hay riesgo. Siena usa `PreparedStatement` con parámetros `?` en todas las operaciones.
+Los nombres de tabla y columna se resuelven por reflexión desde las anotaciones del modelo
+Java, nunca desde input de usuario.
+
+### Features que NO deben usarse
+
+Las siguientes funcionalidades usan deserialización Java nativa (`ObjectInputStream`),
+que permite ejecución remota de código si un atacante consigue inyectar datos en la BD:
+
+| Feature | Motivo |
+|---|---|
+| `@Polymorphic` | Deserializa bytes arbitrarios con `ObjectInputStream.readObject()` |
+| `@Embedded(mode = SERIALIZE_JAVA)` | Mismo problema. Usar siempre `SERIALIZE_JSON` (por defecto) |
+
+No exponer nunca a usuarios externos:
+
+| Feature | Motivo |
+|---|---|
+| `query.restore(String dump)` | Usa `Class.forName()` con el tipo almacenado en el JSON, permitiendo instanciar clases arbitrarias |
+| `PersistenceManagerFactory.init(Properties)` | Carga clases por nombre desde la configuración |
+
+### Validación de tamaño de página
+
+Siena no limita el tamaño de `fetch()` ni de cláusulas `IN`. Los controladores de app/
+deben validar los parámetros de paginación antes de pasarlos a queries de Siena.
+
+---
+
 ## Historial del fork
 
 - **v1.0.0-cuentica** (2024): Limpieza parcial. Eliminación de GAE, soporte LocalDateTime.

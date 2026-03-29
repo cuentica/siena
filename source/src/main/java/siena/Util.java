@@ -27,8 +27,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -132,64 +130,56 @@ public class Util {
 		return value;
 	}
 
-	private static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS") {
-		private static final long serialVersionUID = 1L;
+	private static final java.time.format.DateTimeFormatter TIMESTAMP_FORMATTER =
+		java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+			.withZone(java.time.ZoneOffset.UTC);
 
-		{
-			setTimeZone(TimeZone.getTimeZone("UTC"));
-		}
-	};
+	private static final java.time.format.DateTimeFormatter DATE_FORMATTER =
+		java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")
+			.withZone(java.time.ZoneOffset.UTC);
 
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd") {
-		private static final long serialVersionUID = 1L;
-
-		{
-			setTimeZone(TimeZone.getTimeZone("UTC"));
-		}
-	};
-
-	private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss") {
-		private static final long serialVersionUID = 1L;
-
-		{
-			setTimeZone(TimeZone.getTimeZone("UTC"));
-		}
-	};
+	private static final java.time.format.DateTimeFormatter TIME_FORMATTER =
+		java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss")
+			.withZone(java.time.ZoneOffset.UTC);
 
 	public static Date timestamp(String s) {
 		try {
-			return TIMESTAMP_FORMAT.parse(s);
-		} catch (ParseException e) {
+			java.time.LocalDateTime ldt = java.time.LocalDateTime.parse(s, TIMESTAMP_FORMATTER);
+			return Date.from(ldt.atZone(java.time.ZoneOffset.UTC).toInstant());
+		} catch (java.time.format.DateTimeParseException e) {
 			throw new SienaException(e);
 		}
 	}
 
 	public static String timestamp(Object d) {
-		return TIMESTAMP_FORMAT.format((Date) d);
+		return TIMESTAMP_FORMATTER.format(((Date) d).toInstant());
 	}
 
 	public static Date time(String s) {
 		try {
-			return TIME_FORMAT.parse(s);
-		} catch (ParseException e) {
+			java.time.LocalTime lt = java.time.LocalTime.parse(s, TIME_FORMATTER);
+			java.time.LocalDateTime ldt = lt.atDate(java.time.LocalDate.of(1970, 1, 1));
+			return Date.from(ldt.atZone(java.time.ZoneOffset.UTC).toInstant());
+		} catch (java.time.format.DateTimeParseException e) {
 			throw new SienaException(e);
 		}
 	}
 
 	public static String time(Date d) {
-		return TIME_FORMAT.format(d);
+		return TIME_FORMATTER.format(d.toInstant());
 	}
 
 	public static Date date(String s) {
 		try {
-			return DATE_FORMAT.parse(s);
-		} catch (ParseException e) {
+			java.time.LocalDate ld = java.time.LocalDate.parse(s, DATE_FORMATTER);
+			return Date.from(ld.atStartOfDay(java.time.ZoneOffset.UTC).toInstant());
+		} catch (java.time.format.DateTimeParseException e) {
 			throw new SienaException(e);
 		}
 	}
 
 	public static String date(Date d) {
-		return DATE_FORMAT.format(d);
+		return DATE_FORMATTER.format(d.toInstant());
 	}
 
 	public static String toString(Field field, Object value) {
@@ -371,14 +361,9 @@ public class Util {
 			Constructor<T> c = clazz.getDeclaredConstructor();
 			c.setAccessible(true);
 			return c.newInstance();
-		} catch (NoSuchMethodException ex) {
-			try {
-				return clazz.newInstance();
-			} catch (Exception e) {
-				throw new SienaException(e);
-			}
 		} catch (Exception e) {
-			throw new SienaException(e);
+			throw new SienaException("Cannot create instance of " + clazz.getName() +
+				". Ensure it has a no-arg constructor.", e);
 		}
 	}
 

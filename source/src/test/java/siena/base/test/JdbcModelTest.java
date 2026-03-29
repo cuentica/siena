@@ -7,7 +7,7 @@ import java.util.Properties;
 
 import junit.framework.TestResult;
 
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformFactory;
 import org.apache.ddlutils.model.Database;
@@ -42,7 +42,7 @@ public class JdbcModelTest extends BaseModelTest {
 			dataSource.setUrl(url);
 			dataSource.setUsername(username);
 			dataSource.setPassword(password);
-			dataSource.setMaxWait(2000); // 2 seconds max for wait a connection.
+			dataSource.setMaxWaitMillis(2000); // 2 seconds max for wait a connection.
 			
 			DdlGenerator generator = new DdlGenerator();
 			for (Class<?> clazz : classes) {

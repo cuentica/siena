@@ -50,6 +50,7 @@ abstract public class SienaFutureWrapper<K, V> implements Future<V> {
         } catch (InterruptedException e) {
             throw e;
         } catch (Exception e) {
+            Thread.currentThread().interrupt();
             throw new ExecutionException(e);
         }
     }
@@ -64,6 +65,7 @@ abstract public class SienaFutureWrapper<K, V> implements Future<V> {
         } catch (InterruptedException | TimeoutException e) {
             throw e;
         } catch (Exception e) {
+            Thread.currentThread().interrupt();
             throw new ExecutionException(e);
         }
     }

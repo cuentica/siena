@@ -270,8 +270,11 @@ public class BaseQuery<T> extends BaseQueryData<T> implements Query<T> {
 	}
 
 	public void dump(OutputStream os, QueryOption... options) {
-		try (OutputStreamWriter st = new OutputStreamWriter(os)) {
+		// No cerrar el stream: es responsabilidad del caller
+		OutputStreamWriter st = new OutputStreamWriter(os);
+		try {
 			st.write(JsonSerializer.serialize(this).toString());
+			st.flush();
 		} catch (IOException e) {
 			throw new SienaException(e);
 		}
@@ -284,17 +287,19 @@ public class BaseQuery<T> extends BaseQueryData<T> implements Query<T> {
 
 	@SuppressWarnings("unchecked")
 	public Query<T> restore(InputStream is, QueryOption... options) {
-		try (InputStreamReader st = new InputStreamReader(is)) {
-			StringBuilder sb = new StringBuilder();
-			char[] buffer = new char[1024];
-			int bytesRead;
+		// No cerrar el stream: es responsabilidad del caller
+		InputStreamReader st = new InputStreamReader(is);
+		StringBuilder sb = new StringBuilder();
+		char[] buffer = new char[1024];
+		int bytesRead;
+		try {
 			while ((bytesRead = st.read(buffer)) != -1) {
 				sb.append(buffer, 0, bytesRead);
 			}
-			return (Query<T>)JsonSerializer.deserialize(BaseQuery.class, Json.loads(sb.toString()));
 		} catch (IOException e) {
 			throw new SienaException(e);
 		}
+		return (Query<T>)JsonSerializer.deserialize(BaseQuery.class, Json.loads(sb.toString()));
 	}
 		
 }
